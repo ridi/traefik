@@ -1,0 +1,12 @@
+version: "2"
+services:
+  proxy:
+    image: nginx:mainline
+    ports:
+      - "443:443"
+    volumes:
+      - ./conf/default.conf:/etc/nginx/conf.d/default.conf
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
