@@ -16,7 +16,14 @@ update-ca-certificates
 			backend="${backend}\nbackend ${value}\n  server ${value} host.docker.internal:${port}\n"
 		fi
 		
-		use_backend="${use_backend}\n  acl ${value} hdr(host) -i ${key}\n  use_backend ${value} if ${value}\n"
+		use_backend="${use_backend}
+  {{ range \$host, \$container := . }}
+  {{ if eq \$container.Name \"${value}\" }}
+  acl ${value} hdr(host) -i ${key}
+  use_backend ${value} if ${value}
+  {{ end }}
+  {{ end }}
+		"
 	done < vhosts.cfg
 
 	IFS=''
