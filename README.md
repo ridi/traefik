@@ -16,13 +16,9 @@ brew install nss # For Firefox
 make init
 ```
 
-#### 2. Add a host name
+#### 2. Create config file
+
 ```
-127.0.0.1 api.pay.local.ridi.io
-127.0.0.1 pay.local.ridi.io
-127.0.0.1 local.ridi.io
-127.0.0.1 static.local.ridi.io
-127.0.0.1 admin.local.ridi.io
 ```
 
 #### 3. Run docker compose
