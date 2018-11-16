@@ -1,6 +1,7 @@
 version: "3"
 services:
   haproxy:
+    container_name: reverse-proxy
     image: ridi/haproxy
     build: .
     ports:
@@ -9,7 +10,7 @@ services:
     environment:
       - CAROOT
     volumes:
-      - ${CAROOT}:/usr/local/share/ca-certificates:ro
+      - ${CAROOT}/rootCA.pem:/usr/local/share/ca-certificates/rootCA.crt:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./docker-entrypoint.sh:/app/docker-entrypoint.sh:ro
       - ./docker-gen.cfg:/app/docker-gen.cfg:ro
