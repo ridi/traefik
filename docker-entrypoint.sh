@@ -11,9 +11,9 @@ update-ca-certificates
 		value=$(echo "$p" | cut -f2 -d=)
 
 		if [ -z "${value##[0-9]*}" ]; then
-			port="${value}"
-			value="port_${value}"
-			backend="${backend}\nbackend ${value}\n  server ${value} host.docker.internal:${port}\n"
+			name="port_${value}"
+			backend="${backend}\nbackend ${name}\n  server ${name} host.docker.internal:${value}\n"
+			use_backend="${use_backend}\n  acl ${name} hdr(host) -i ${key}\n  use_backend ${name} if ${name}\n"
 		fi
 		
 		use_backend="${use_backend}
