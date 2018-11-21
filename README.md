@@ -30,5 +30,5 @@ api.pay.local.ridi.io=pay-backend_api_1
 #### 3. Run docker compose
 
 ```
-make proxy
+docker-compose up [-d]
 ```
