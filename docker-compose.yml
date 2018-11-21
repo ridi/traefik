@@ -7,10 +7,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    environment:
-      - CAROOT
     volumes:
-      - ${CAROOT}/rootCA.pem:/usr/local/share/ca-certificates/rootCA.crt:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./docker-entrypoint.sh:/app/docker-entrypoint.sh:ro
       - ./docker-gen.cfg:/app/docker-gen.cfg:ro
@@ -23,8 +20,7 @@ services:
         hard: 65536
 
   dnsmasq:
-    image: ridi/dnsmasq
-    build: dnsmasq
+    image: andyshinn/dnsmasq
     ports:
       - "53:53/tcp"
       - "53:53/udp"
@@ -32,9 +28,11 @@ services:
       - NET_ADMIN
     environment:
       - IP_ADDR
-    command: [
-      "dnsmasq",
-      "-k",
-      "-h",
-      "--address=/.local.ridi.io/.pay.local.ridi.io/${IP_ADDR:-127.0.0.1}"
+    volumes:
+      - ./dnsmasq-entrypoint.sh:/docker-entrypoint.sh:ro
+      - ./vhosts.cfg:/vhosts.cfg:ro
+    entrypoint: [
+      "/bin/sh",
+      "-c",
+      "/docker-entrypoint.sh"
     ]
