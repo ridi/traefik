@@ -5,24 +5,21 @@
 
 - docker
 - mkcert
+
 ```
 brew install mkcert
 brew install nss # For Firefox
 ```
 
-#### 1. Create a local certificate
+#### 1. Create a vhosts.cfg file and local certificates
 
 ```
-make init
-```
-
-#### 2. Add a host name
-```
-127.0.0.1 api.pay.local.ridi.io
-127.0.0.1 pay.local.ridi.io
-127.0.0.1 local.ridi.io
-127.0.0.1 static.local.ridi.io
-127.0.0.1 admin.local.ridi.io
+make config
+make certs
 ```
 
 #### 3. Run docker compose
+
+```
+docker-compose up [-d]
+```

@@ -1,1 +1,3 @@
-ssl
+ssl/
+.env
+vhosts.cfg
