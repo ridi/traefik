@@ -18,9 +18,9 @@ update-ca-certificates
 		
 		use_backend="${use_backend}
   {{ range \$host, \$container := . }}
-  {{ if eq \$container.Name \"${value}\" }}
+  {{ if (hasPrefix \"${value}\" \$container.Name) }}
   acl ${value} hdr(host) -i ${key}
-  use_backend ${value} if ${value}
+  use_backend {{ \$container.Name }} if ${value}
   {{ end }}
   {{ end }}
 		"
