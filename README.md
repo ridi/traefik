@@ -1,4 +1,4 @@
-> RIDI Reverse-Proxy
+> Proxy for Ridi Development Enviorment
 
 
 ## Requirements
