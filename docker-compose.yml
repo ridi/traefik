@@ -1,7 +1,6 @@
 version: "3"
 services:
   haproxy:
-    container_name: reverse-proxy
     image: ridi/haproxy
     build: .
     ports:
