@@ -1,23 +1,20 @@
-version: "3"
+version: "3.6"
 services:
-  haproxy:
-    image: ridi/haproxy
-    build: .
+  traefik:
+    image: traefik:alpine
+    command: --api --docker
+    depends_on:
+      - openssl
     ports:
       - "80:80"
       - "443:443"
+      - "8080:8080"
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./docker-entrypoint.sh:/app/docker-entrypoint.sh:ro
-      - ./docker-gen.cfg:/app/docker-gen.cfg:ro
-      - ./haproxy.tmpl:/app/haproxy.tmpl:ro
-      - ./vhosts.cfg:/app/vhosts.cfg:ro
-      - ./ssl:/ssl:ro
-    ulimits:
-      nofile:
-        soft: 65536
-        hard: 65536
-
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.toml:/etc/traefik/traefik.toml
+      - ssl:/ssl
+    networks:
+      - traefik
   dnsmasq:
     image: andyshinn/dnsmasq
     ports:
@@ -26,12 +23,21 @@ services:
     cap_add:
       - NET_ADMIN
     environment:
+      - ADDRESSES # to use multiple domains, separate them with slash. for includes subdomains, start with dot.
       - IP_ADDR
-    volumes:
-      - ./dnsmasq-entrypoint.sh:/docker-entrypoint.sh:ro
-      - ./vhosts.cfg:/vhosts.cfg:ro
-    entrypoint: [
-      "/bin/sh",
-      "-c",
-      "/docker-entrypoint.sh"
+    command: [
+      "--no-hosts",
+      "--address=/${ADDRESSES:-.local.ridi.io}/${IP_ADDR:-127.0.0.1}"
     ]
+  openssl:
+    image: frapsoft/openssl
+    volumes:
+      - ./ssl/:/pem/
+      - ./openssl-entrypoint.sh:/docker-entrypoint.sh
+      - ssl:/ssl
+    entrypoint: /bin/sh -c /docker-entrypoint.sh
+volumes:
+  ssl:
+networks:
+  traefik:
+    name: traefik

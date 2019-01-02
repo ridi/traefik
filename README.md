@@ -11,10 +11,9 @@ brew install mkcert
 brew install nss # For Firefox
 ```
 
-#### 1. Create a vhosts.cfg file and local certificates
+#### 1. Create local certificates
 
 ```
-make config
 make certs
 ```
 

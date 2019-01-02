@@ -1,0 +1,20 @@
+logLevel = "INFO"
+defaultEntryPoints = ["https", "http"]
+
+[accessLog]
+  filePath = "/access.log"
+  format = "json"
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.http.proxyProtocol]
+      trustedIPs = ["127.0.0.1/32", "192.168.0.0/16"]
+    [entryPoints.https.tls]
+      [[entryPoints.https.tls.certificates]]
+      certFile = "/ssl/traefik.crt"
+      keyFile = "/ssl/traefik.key"
