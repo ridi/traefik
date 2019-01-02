@@ -18,3 +18,7 @@ defaultEntryPoints = ["https", "http"]
       [[entryPoints.https.tls.certificates]]
       certFile = "/ssl/traefik.crt"
       keyFile = "/ssl/traefik.key"
+
+[file]
+watch = true
+directory = "/traefik/"
