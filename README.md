@@ -17,7 +17,7 @@ brew install nss # For Firefox
 make certs
 ```
 
-#### 3. Run docker compose
+#### 2. Run docker compose
 
 ```
 docker-compose up [-d]
