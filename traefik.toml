@@ -19,6 +19,11 @@ defaultEntryPoints = ["https", "http"]
       certFile = "/ssl/traefik.crt"
       keyFile = "/ssl/traefik.key"
 
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+watch = true
+exposedByDefault = false
+
 [file]
 watch = true
 directory = "/traefik/"

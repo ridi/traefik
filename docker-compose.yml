@@ -2,7 +2,7 @@ version: "3.6"
 services:
   traefik:
     image: traefik:alpine
-    command: --api --docker
+    command: --api
     depends_on:
       - openssl
     ports:
