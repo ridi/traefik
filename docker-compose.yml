@@ -41,4 +41,5 @@ volumes:
   ssl:
 networks:
   traefik:
-    name: traefik
+    external:
+      name: ${EXTERNAL_NETWORK:-ridi}
