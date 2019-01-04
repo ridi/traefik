@@ -1,7 +1,4 @@
-> Proxy for Ridi Development Enviorment
-
-
-## Requirements
+# Requirements
 
 - docker
 - mkcert
@@ -11,12 +8,18 @@ brew install mkcert
 brew install nss # For Firefox
 ```
 
-#### 1. Create a vhosts.cfg file and local certificates
+#### 1. Create local certificates
 
 ```
-make config
 make certs
 ```
+
+#### 2. Add dns resolver
+
+```
+sudo make dns-resolver
+```
+
 
 #### 3. Run docker compose
 
