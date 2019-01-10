@@ -14,8 +14,6 @@ services:
       - ./traefik.toml:/etc/traefik/traefik.toml
       - ./traefik/:/traefik/
       - ssl:/ssl
-    networks:
-      - traefik
   dnsmasq:
     image: andyshinn/dnsmasq
     ports:
@@ -40,5 +38,5 @@ services:
 volumes:
   ssl:
 networks:
-  traefik:
+  default:
     name: ${EXTERNAL_NETWORK:-ridi}
