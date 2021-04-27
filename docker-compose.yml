@@ -29,7 +29,7 @@ services:
       "--address=/${ADDRESSES:-.local.ridi.io}/${IP_ADDR:-127.0.0.1}"
     ]
   openssl:
-    image: frapsoft/openssl
+    image: bxggs/openssl
     volumes:
       - ./ssl/:/pem/
       - ./openssl-entrypoint.sh:/docker-entrypoint.sh
