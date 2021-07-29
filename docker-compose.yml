@@ -1,42 +1,18 @@
-version: "3.6"
+version: "3.8"
+
+networks:
+  default:
+    name: ridi
+
 services:
   traefik:
-    image: traefik:alpine
-    command: --api
-    depends_on:
-      - openssl
+    image: traefik:latest
     ports:
       - "80:80"
       - "443:443"
       - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./traefik.toml:/etc/traefik/traefik.toml
-      - ./traefik/:/traefik/
-      - ssl:/ssl
-  dnsmasq:
-    image: andyshinn/dnsmasq
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-    cap_add:
-      - NET_ADMIN
-    environment:
-      - ADDRESSES # to use multiple domains, separate them with slash. for includes subdomains, start with dot.
-      - IP_ADDR
-    command: [
-      "--no-hosts",
-      "--address=/${ADDRESSES:-.local.ridi.io}/${IP_ADDR:-127.0.0.1}"
-    ]
-  openssl:
-    image: bxggs/openssl
-    volumes:
-      - ./ssl/:/pem/
-      - ./openssl-entrypoint.sh:/docker-entrypoint.sh
-      - ssl:/ssl
-    entrypoint: /bin/sh -c /docker-entrypoint.sh
-volumes:
-  ssl:
-networks:
-  default:
-    name: ${EXTERNAL_NETWORK:-ridi}
+      - ./traefik.yaml:/etc/traefik/traefik.yaml
+      - ./dynamic:/etc/traefik/dynamic
+      - ./tls:/etc/traefik/tls

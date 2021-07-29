@@ -1,4 +1,2 @@
-ssl/
-traefik/
-.env
-*.log
+dynamic/
+tls/
